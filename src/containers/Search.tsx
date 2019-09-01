@@ -71,11 +71,28 @@ class Search extends Component<PropsToPass> {
                       className={`tile is-parent is-${12 / chunkLength}`}
                       key={`tile-${idx0}-${idx1}`}
                     >
-                      <article className="tile is-child box">
-                        <p className="subtitle is-5">
-                          {tile.firstName}&nbsp;{tile.lastName}
-                        </p>
-                      </article>
+                      <div className="tile is-child box">
+                        <div className="field">
+                          <label className="label">Full Name</label>
+                          <div className="control">
+                            {tile.firstName}&nbsp;{tile.lastName}
+                          </div>
+                        </div>
+                        <div className="field">
+                          <label className="label">Date of Birth</label>
+                          <div className="control">
+                            {tile.dateOfBirth.toDateString()}
+                          </div>
+                        </div>
+                        <div className="field is-grouped">
+                          <div className="control">
+                            <a className="button is-link">Edit</a>
+                          </div>
+                          <div className="control">
+                            <a className="button is-danger">Delete</a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}

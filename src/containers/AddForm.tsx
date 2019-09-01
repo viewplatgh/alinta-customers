@@ -64,6 +64,22 @@ class AddForm extends Component<PropsToPass> {
           </div>
         </div>
         <div className="field">
+          <label className="label">Date of Birth</label>
+          <div className="control">
+            <input
+              type="date"
+              onChange={e => {
+                this.setState({
+                  customer: {
+                    ...this.state.customer,
+                    dateOfBirth: new Date(e.target.value)
+                  }
+                });
+              }}
+            />
+          </div>
+        </div>
+        <div className="field">
           <div className="control">
             <button
               className="button is-link"
