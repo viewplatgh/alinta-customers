@@ -3,6 +3,7 @@ import './App.css';
 
 import Header from './components/Header';
 import AddForm from './containers/AddForm';
+import Search from './containers/Search';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,9 @@ const App: React.FC = () => {
       <div className="section">
         <div className="container">
           <AddForm />
+        </div>
+        <div className="container">
+          <Search />
         </div>
       </div>
     </div>

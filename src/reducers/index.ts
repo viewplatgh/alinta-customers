@@ -1,11 +1,18 @@
 import _ from 'lodash';
-import { Action, State, Customer } from '../types';
-import { ADD_CUSTOMER, REFRESH_SEARCH } from '../actions';
+import {
+  Action,
+  State,
+  Customer,
+  AddEditActionType,
+  SearchActionType,
+  DeleteActionType
+} from '../types';
+import { ADD_CUSTOMER, REFRESH_SEARCH, SEARCH_CUSTOMER } from '../actions';
 
 const initialState: State = {
   keyword: '',
   customers: [] as Customer[],
-  results: [] as Customer[]
+  result: [] as Customer[]
 };
 
 export default function alintaReducer(
@@ -16,10 +23,24 @@ export default function alintaReducer(
     case ADD_CUSTOMER:
       return {
         ...state,
-        customers: [...state.customers, action.customer]
-      } as State;
-    case REFRESH_SEARCH:
-      const newResults = _.filter(state.customers, customer => {
+        customers: [...state.customers, (action as AddEditActionType).payload]
+      };
+    case SEARCH_CUSTOMER: {
+      const newResult = _.filter(state.customers, customer => {
+        return (
+          customer.firstName.search((action as SearchActionType).payload) >=
+            0 ||
+          customer.lastName.search((action as SearchActionType).payload) >= 0
+        );
+      });
+      return {
+        ...state,
+        keyword: (action as SearchActionType).payload,
+        result: [...newResult]
+      };
+    }
+    case REFRESH_SEARCH: {
+      const newResult = _.filter(state.customers, customer => {
         return (
           customer.firstName.search(state.keyword) >= 0 ||
           customer.lastName.search(state.keyword) >= 0
@@ -27,8 +48,9 @@ export default function alintaReducer(
       });
       return {
         ...state,
-        results: [...newResults]
+        result: [...newResult]
       };
+    }
     default:
       return state;
   }

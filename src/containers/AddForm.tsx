@@ -18,6 +18,13 @@ class AddForm extends Component<PropsToPass> {
       dateOfBirth: new Date()
     }
   };
+
+  resetForm() {
+    this.setState({
+      customer: { id: generateID(), firstName: '', lastName: '' }
+    });
+  }
+
   render() {
     return (
       <>
@@ -60,7 +67,10 @@ class AddForm extends Component<PropsToPass> {
           <div className="control">
             <button
               className="button is-link"
-              onClick={e => this.props.onAddCustomer(this.state.customer)}
+              onClick={e => {
+                this.props.onAddCustomer(this.state.customer);
+                this.resetForm();
+              }}
             >
               Add
             </button>

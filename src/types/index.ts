@@ -7,11 +7,22 @@ export interface Customer {
 
 export interface Action {
   type: string;
-  customer: Customer;
 }
 
 export interface State {
   keyword: string;
   customers: Customer[];
-  results: Customer[];
+  result: Customer[];
+}
+
+export interface SearchActionType extends Action {
+  payload: string;
+}
+
+export interface AddEditActionType extends Action {
+  payload: Customer;
+}
+
+export interface DeleteActionType extends Action {
+  payload: string;
 }
