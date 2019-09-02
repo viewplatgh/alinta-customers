@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { searchCustomer } from '../actions';
+import { searchCustomer, deleteCustomer } from '../actions';
 import { Customer, State } from '../types';
 
 const chunkLength = 4;
@@ -9,6 +9,7 @@ interface PropsToPass {
   keyword: string;
   result: Customer[];
   onDispatchSearch: (keyword: string) => void;
+  onDispatchDelete: (id: string) => void;
 }
 
 class Search extends Component<PropsToPass> {
@@ -72,25 +73,34 @@ class Search extends Component<PropsToPass> {
                       key={`tile-${idx0}-${idx1}`}
                     >
                       <div className="tile is-child box">
-                        <div className="field">
+                        <div>
                           <label className="label">Full Name</label>
-                          <div className="control">
+                          <div>
                             {tile.firstName}&nbsp;{tile.lastName}
                           </div>
                         </div>
-                        <div className="field">
+                        <div>
                           <label className="label">Date of Birth</label>
-                          <div className="control">
-                            {tile.dateOfBirth.toDateString()}
-                          </div>
+                          <div>{tile.dateOfBirth.toDateString()}</div>
                         </div>
-                        <div className="field is-grouped">
-                          <div className="control">
-                            <a className="button is-link">Edit</a>
-                          </div>
-                          <div className="control">
-                            <a className="button is-danger">Delete</a>
-                          </div>
+                        <div className="is-grouped">
+                          <input
+                            className="button is-link"
+                            value="Edit"
+                            readOnly
+                            style={{ maxWidth: '100px' }}
+                          />
+                          &nbsp;
+                          <input
+                            className="button is-danger"
+                            onClick={this.props.onDispatchDelete.bind(
+                              this.props,
+                              tile.id
+                            )}
+                            value="Delete"
+                            readOnly
+                            style={{ maxWidth: '100px' }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -114,7 +124,8 @@ const mapSearchStateToProps = (state: State) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onDispatchSearch: (keyword: string) => dispatch(searchCustomer(keyword))
+    onDispatchSearch: (keyword: string) => dispatch(searchCustomer(keyword)),
+    onDispatchDelete: (id: string) => dispatch(deleteCustomer(id))
   };
 };
 

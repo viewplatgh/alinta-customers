@@ -21,13 +21,24 @@ class AddForm extends Component<PropsToPass> {
 
   resetForm() {
     this.setState({
-      customer: { id: generateID(), firstName: '', lastName: '' }
+      customer: {
+        id: generateID(),
+        firstName: '',
+        lastName: '',
+        dateOfBirth: new Date()
+      }
     });
   }
 
   render() {
     return (
-      <>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          this.props.onAddCustomer(this.state.customer);
+          this.resetForm();
+        }}
+      >
         <div className="field">
           <label className="label">First Name</label>
           <div className="control">
@@ -44,6 +55,7 @@ class AddForm extends Component<PropsToPass> {
                   }
                 });
               }}
+              required
             />
           </div>
         </div>
@@ -57,9 +69,13 @@ class AddForm extends Component<PropsToPass> {
               value={this.state.customer.lastName}
               onChange={e => {
                 this.setState({
-                  customer: { ...this.state.customer, lastName: e.target.value }
+                  customer: {
+                    ...this.state.customer,
+                    lastName: e.target.value
+                  }
                 });
               }}
+              required
             />
           </div>
         </div>
@@ -81,18 +97,10 @@ class AddForm extends Component<PropsToPass> {
         </div>
         <div className="field">
           <div className="control">
-            <button
-              className="button is-link"
-              onClick={e => {
-                this.props.onAddCustomer(this.state.customer);
-                this.resetForm();
-              }}
-            >
-              Add
-            </button>
+            <input className="button is-link" type="submit" value="Add" />
           </div>
         </div>
-      </>
+      </form>
     );
   }
 }

@@ -7,7 +7,12 @@ import {
   SearchActionType,
   DeleteActionType
 } from '../types';
-import { ADD_CUSTOMER, REFRESH_SEARCH, SEARCH_CUSTOMER } from '../actions';
+import {
+  ADD_CUSTOMER,
+  REFRESH_SEARCH,
+  SEARCH_CUSTOMER,
+  DELETE_CUSTOMER
+} from '../actions';
 
 const initialState: State = {
   keyword: '',
@@ -49,6 +54,19 @@ export default function alintaReducer(
       return {
         ...state,
         result: [...newResult]
+      };
+    }
+    case DELETE_CUSTOMER: {
+      let newCustomers = [...state.customers];
+      newCustomers.splice(
+        newCustomers.findIndex(
+          item => item.id === (action as DeleteActionType).payload
+        ),
+        1
+      );
+      return {
+        ...state,
+        customers: newCustomers
       };
     }
     default:
