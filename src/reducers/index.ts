@@ -11,7 +11,8 @@ import {
   ADD_CUSTOMER,
   REFRESH_SEARCH,
   SEARCH_CUSTOMER,
-  DELETE_CUSTOMER
+  DELETE_CUSTOMER,
+  EDIT_CUSTOMER
 } from '../actions';
 
 const initialState: State = {
@@ -68,6 +69,15 @@ export default function alintaReducer(
         ...state,
         customers: newCustomers
       };
+    }
+    case EDIT_CUSTOMER: {
+      const newCustomer = (action as AddEditActionType).payload;
+      const newCusomters = [...state.customers];
+      const toEditIndex = newCusomters.findIndex(
+        item => item.id === newCustomer.id
+      );
+      newCusomters.splice(toEditIndex, 1, newCustomer);
+      return { ...state, customers: newCusomters };
     }
     default:
       return state;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { searchCustomer, deleteCustomer } from '../actions';
 import { Customer, State } from '../types';
+import { Link } from 'react-router-dom';
 
 const chunkLength = 4;
 
@@ -14,6 +15,10 @@ interface PropsToPass {
 
 class Search extends Component<PropsToPass> {
   private keywordRef = React.createRef<HTMLInputElement>();
+
+  componentDidMount() {
+    this.props.onDispatchSearch('');
+  }
 
   render() {
     let chunks = [];
@@ -84,23 +89,22 @@ class Search extends Component<PropsToPass> {
                           <div>{tile.dateOfBirth.toDateString()}</div>
                         </div>
                         <div className="is-grouped">
-                          <input
+                          <Link
                             className="button is-link"
-                            value="Edit"
-                            readOnly
-                            style={{ maxWidth: '100px' }}
-                          />
+                            to={`/edit/${tile.id}`}
+                          >
+                            Edit
+                          </Link>
                           &nbsp;
-                          <input
+                          <button
                             className="button is-danger"
                             onClick={this.props.onDispatchDelete.bind(
                               this.props,
                               tile.id
                             )}
-                            value="Delete"
-                            readOnly
-                            style={{ maxWidth: '100px' }}
-                          />
+                          >
+                            Delete
+                          </button>
                         </div>
                       </div>
                     </div>

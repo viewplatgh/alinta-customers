@@ -9,6 +9,7 @@ export const ADD_CUSTOMER = 'ADD_CUSTOMER';
 export const SEARCH_CUSTOMER = 'SEARCH_CUSTOMER';
 export const REFRESH_SEARCH = 'REFRESH_SEARCH';
 export const DELETE_CUSTOMER = 'DELETE_CUSTOMER';
+export const EDIT_CUSTOMER = 'EDIT_CUSTOMER';
 
 export function addCustomer(customer: Customer): AddEditActionType {
   return {
@@ -32,5 +33,12 @@ export function deleteCustomer(id: string): DeleteActionType {
   return {
     type: DELETE_CUSTOMER,
     payload: id
+  };
+}
+
+export function editCustomer(customer: Customer): AddEditActionType {
+  return {
+    type: EDIT_CUSTOMER,
+    payload: customer
   };
 }
