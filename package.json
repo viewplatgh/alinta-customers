@@ -53,6 +53,7 @@
   "prettier": {
     "singleQuote": true
   },
+  "homepage": "https://viewplatgh.github.io/alinta-customers/",
   "browserslist": {
     "production": [
       ">0.2%",
